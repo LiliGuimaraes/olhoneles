@@ -51,7 +51,7 @@ legislators
         'django-parsley>=0.4,<0.5.0',
         'django-queryset-csv>=1.0.0,<1.1.0',
         'django-recaptcha>=1.2.0,<1.3.0',
-        'django-tastypie>=0.13.3,<0.14.0',
+        'django-tastypie>=0.14.2,<0.15.0',
         'django-tastypie-swagger@git+https://git@github.com/olhoneles/django-tastypie-swagger.git@fix-compatibility-django-1.10#egg=django-tastypie-swagger-0.1.4-django1.10',
         'easy-thumbnails>=2.4.2,<2.5.0',
         'lxml>=4.4.1,<4.5.0',

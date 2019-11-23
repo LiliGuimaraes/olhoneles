@@ -16,7 +16,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.conf.urls import url
+from django.urls import path
 from django.views.generic.base import RedirectView
 from django.views.generic import TemplateView
 
@@ -31,25 +31,25 @@ from montanha.views import (
 
 urlpatterns = [
     # JSON queries
-    url(r'^([^/]+)?/?q/all/?$', query_all, name='query-all'),
-    url(r'^([^/]+)?/?q/biggest_suppliers/?$', query_biggest_suppliers, name='query-biggest-suppliers'),
-    url(r'^([^/]+)?/?q/supplier_all/?$', query_supplier_all, name='query-supplier-all'),
-    url(r'^([^/]+)?/?q/legislator_all/?$', query_legislator_all, name='query-legislator-all'),
+    path(r'^([^/]+)?/?q/all/?$', query_all, name='query-all'),
+    path(r'^([^/]+)?/?q/biggest_suppliers/?$', query_biggest_suppliers, name='query-biggest-suppliers'),
+    path(r'^([^/]+)?/?q/supplier_all/?$', query_supplier_all, name='query-supplier-all'),
+    path(r'^([^/]+)?/?q/legislator_all/?$', query_legislator_all, name='query-legislator-all'),
 
-    url(r'^([^/]+)?/?all/?([^/]+)?/$', show_all, name='show-all'),
+    path(r'^([^/]+)?/?all/?([^/]+)?/$', show_all, name='show-all'),
 
-    url(r'^([^/]+)?/?per-nature/?([^/]+)?/$', show_per_nature, name='per-nature'),
-    url(r'^([^/]+)?/?per-legislator/?([^/]+)?/$', show_per_legislator, name='per-legislator'),
-    url(r'^([^/]+)?/?per-party/?([^/]+)?/$', show_per_party, name='per-party'),
-    url(r'^([^/]+)?/?per-supplier/?([^/]+)?/$', show_per_supplier, name='per-supplier'),
+    path(r'^([^/]+)?/?per-nature/?([^/]+)?/$', show_per_nature, name='per-nature'),
+    path(r'^([^/]+)?/?per-legislator/?([^/]+)?/$', show_per_legislator, name='per-legislator'),
+    path(r'^([^/]+)?/?per-party/?([^/]+)?/$', show_per_party, name='per-party'),
+    path(r'^([^/]+)?/?per-supplier/?([^/]+)?/$', show_per_supplier, name='per-supplier'),
 
-    url(r'^detail-supplier/(\d+)/?$', show_supplier_overview, name='show-supplier-overview'),
+    path(r'^detail-supplier/(\d+)/?$', show_supplier_overview, name='show-supplier-overview'),
 
-    url(r'^([^/]+)?/?detail-legislator/(\d+)/?$', show_legislator_detail, name='show-legislator-detail'),
-    url(r'^([^/]+)?/?detail-supplier/(\d+)/?$', show_supplier_detail, name='show-supplier-detail'),
+    path(r'^([^/]+)?/?detail-legislator/(\d+)/?$', show_legislator_detail, name='show-legislator-detail'),
+    path(r'^([^/]+)?/?detail-supplier/(\d+)/?$', show_supplier_detail, name='show-supplier-detail'),
 
     # favicon
-    url(
+    path(
         r'^favicon.ico$',
         RedirectView.as_view(
             url=staticfiles_storage.url('favicon.ico'),
@@ -58,15 +58,15 @@ urlpatterns = [
     ),
 
     # Robots.txt
-    url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt',
+    path(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt',
                                                content_type='text/plain')),
 
     # What is expenses?
-    url(r'^o-que-e-verba-indenizatoria/?$', what_is_expenses, name='what-is-expenses'),
+    path(r'^o-que-e-verba-indenizatoria/?$', what_is_expenses, name='what-is-expenses'),
 
     # Contact us
-    url(r'^fale-conosco/?$', contact_us, name='contact-us'),
+    path(r'^fale-conosco/?$', contact_us, name='contact-us'),
 
     # Index
-    url(r'^([^/]+)?/?$', show_index, name='index'),
+    path(r'^([^/]+)?/?$', show_index, name='index'),
 ]

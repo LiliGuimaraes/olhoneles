@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf.urls import url, include
+from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
@@ -29,20 +29,20 @@ admin.autodiscover()
 
 urlpatterns = [
     # Admin
-    url(r'^admin/', include(admin.site.urls)),
+    path(r'^admin/', admin.site.urls),
 
     # API
-    url(r'api/v0/',
+    path(r'api/v0/',
         include('tastypie_swagger.urls', namespace='olhoneles-v0'),
         kwargs={
             'namespace': 'olhoneles-v0',
             'tastypie_api_module': 'montanha.api.urls.api',
             'version': __version__,
         }),
-    url(r'^api/', include('montanha.api.urls')),
+    path(r'^api/', include('montanha.api.urls')),
 
     # Montanha
-    url(r'^', include('montanha.urls',
+    path(r'^', include('montanha.urls',
                       namespace='montanha',
                       app_name='montanha')),
 ]
@@ -52,7 +52,7 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
+        path(r'^__debug__/', include(debug_toolbar.urls)),
     ]
 
 handler500 = 'montanha.views.error_500'
