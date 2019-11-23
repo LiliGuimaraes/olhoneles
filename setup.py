@@ -54,7 +54,7 @@ legislators
         'django-tastypie>=0.13.3,<0.14.0',
         'django-tastypie-swagger@git+https://git@github.com/olhoneles/django-tastypie-swagger.git@fix-compatibility-django-1.10#egg=django-tastypie-swagger-0.1.4-django1.10',
         'easy-thumbnails>=2.4.2,<2.5.0',
-        'lxml>=3.7.0,<3.8',
+        'lxml>=4.4.1,<4.5.0',
         'Pillow>=3.4.2,<3.5.0',
         'python-dateutil>=2.6.0,<2.7.0',
         'python-slugify>=1.2.4,<1.3.0',

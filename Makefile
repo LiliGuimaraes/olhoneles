@@ -9,7 +9,7 @@ data:
 	@python manage.py migrate
 
 setup:
-	@pip install -U --process-dependency-links -e .\[tests\]
+	@pip install -U -e .\[tests\]
 
 test: lint unit
 
