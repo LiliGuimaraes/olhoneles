@@ -24,6 +24,7 @@ from django.contrib.sites.models import Site
 class FAQ(models.Model):
     site = models.ForeignKey(
         Site,
+        on_delete=models.CASCADE,
         verbose_name=_('Site'),
         default=settings.SITE_ID)
     question = models.TextField(verbose_name=_('Question'), max_length=1000)

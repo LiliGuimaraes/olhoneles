@@ -149,7 +149,7 @@ class Legislature(models.Model):
         verbose_name = _("Legislature")
         verbose_name_plural = _("Legislatures")
 
-    institution = models.ForeignKey("Institution")
+    institution = models.ForeignKey("Institution", on_delete=models.CASCADE)
 
     original_id = models.CharField(blank=True, null=True,
                                    max_length=512,
@@ -178,9 +178,9 @@ class Mandate(models.Model):
 
     original_id = models.TextField(null=True, blank=True)
 
-    legislator = models.ForeignKey("Legislator")
+    legislator = models.ForeignKey("Legislator", on_delete=models.CASCADE)
 
-    legislature = models.ForeignKey("Legislature")
+    legislature = models.ForeignKey("Legislature", on_delete=models.CASCADE)
 
     date_start = models.DateField(verbose_name=_("Date started"),
                                   help_text=_("""Date in which this mandate started; may also be """
@@ -195,6 +195,7 @@ class Mandate(models.Model):
                                 db_index=True)
 
     party = models.ForeignKey("PoliticalParty",
+                              on_delete=models.CASCADE,
                               verbose_name=_("Party"),
                               help_text=_("""Party the legislator was affiliated to during this """
                                           """mandate."""),
@@ -242,7 +243,7 @@ class CollectionRun(models.Model):
         verbose_name = _("Collections")
 
     date = models.DateField(verbose_name=_("Collection date"), db_index=True)
-    legislature = models.ForeignKey("Legislature")
+    legislature = models.ForeignKey("Legislature", on_delete=models.CASCADE)
     committed = models.BooleanField(default=False)
 
     def __unicode__(self):
@@ -262,7 +263,7 @@ class AbstractExpense(models.Model):
                               verbose_name=_("Document number"),
                               help_text=_("Usually a receipt ID."))
 
-    nature = models.ForeignKey('ExpenseNature')
+    nature = models.ForeignKey('ExpenseNature', on_delete=models.CASCADE)
 
     date = models.DateField(verbose_name=_("Expense date"), db_index=True)
 
@@ -277,9 +278,9 @@ class AbstractExpense(models.Model):
                                    verbose_name=_("Expensed"),
                                    help_text=_("Amount reimbursed to the legislator."))
 
-    mandate = models.ForeignKey("Mandate")
+    mandate = models.ForeignKey("Mandate", on_delete=models.CASCADE)
 
-    supplier = models.ForeignKey("Supplier")
+    supplier = models.ForeignKey("Supplier", on_delete=models.CASCADE)
 
     def __unicode__(self):
         return u"%s expensed by %s on %s (document %s)" % (str(self.expensed),
@@ -307,7 +308,7 @@ class ArchivedExpense(AbstractExpense):
         verbose_name = _("Archived expense")
         verbose_name_plural = _("Archived expenses")
 
-    collection_run = models.ForeignKey("CollectionRun")
+    collection_run = models.ForeignKey("CollectionRun", on_delete=models.CASCADE)
 
 
 class SupplierActivity(models.Model):
@@ -382,6 +383,7 @@ class Supplier(models.Model):
 
     situation = models.ForeignKey(
         'SupplierSituation',
+        on_delete=models.CASCADE,
         verbose_name=_('Situation'),
         blank=True,
         null=True,
@@ -448,6 +450,7 @@ class Supplier(models.Model):
 
     juridical_nature = models.ForeignKey(
         'SupplierJuridicalNature',
+        on_delete=models.CASCADE,
         verbose_name=_('Juridical Nature'),
         blank=True,
         null=True,
@@ -512,6 +515,7 @@ class Supplier(models.Model):
 
     main_activity = models.ForeignKey(
         'SupplierActivity',
+        on_delete=models.CASCADE,
         verbose_name=_('Main Activity'),
         blank=True,
         null=True,
@@ -551,13 +555,14 @@ class Supplier(models.Model):
 
 # Consolidated data models
 class PerNature(models.Model):
-    institution = models.ForeignKey("Institution")
+    institution = models.ForeignKey("Institution", on_delete=models.CASCADE)
     legislature = models.ForeignKey("Legislature",
+                                    on_delete=models.CASCADE,
                                     blank=True,
                                     null=True)
     date_start = models.DateField(db_index=True)
     date_end = models.DateField(db_index=True)
-    nature = models.ForeignKey("ExpenseNature")
+    nature = models.ForeignKey("ExpenseNature", on_delete=models.CASCADE)
     expensed = models.DecimalField(max_digits=20, decimal_places=2)
 
     class Meta:
@@ -569,9 +574,9 @@ class PerNature(models.Model):
 
 
 class PerNatureByYear(models.Model):
-    institution = models.ForeignKey("Institution")
+    institution = models.ForeignKey("Institution", on_delete=models.CASCADE)
     year = models.IntegerField()
-    nature = models.ForeignKey("ExpenseNature")
+    nature = models.ForeignKey("ExpenseNature", on_delete=models.CASCADE)
     expensed = models.DecimalField(max_digits=20, decimal_places=2)
 
     class Meta:
@@ -583,9 +588,9 @@ class PerNatureByYear(models.Model):
 
 
 class PerNatureByMonth(models.Model):
-    institution = models.ForeignKey("Institution")
+    institution = models.ForeignKey("Institution", on_delete=models.CASCADE)
     date = models.DateField(db_index=True)
-    nature = models.ForeignKey("ExpenseNature")
+    nature = models.ForeignKey("ExpenseNature", on_delete=models.CASCADE)
     expensed = models.DecimalField(max_digits=20, decimal_places=2)
 
     class Meta:
@@ -597,11 +602,12 @@ class PerNatureByMonth(models.Model):
 
 
 class PerLegislator(models.Model):
-    institution = models.ForeignKey("Institution")
+    institution = models.ForeignKey("Institution", on_delete=models.CASCADE)
     legislature = models.ForeignKey("Legislature",
+                                    on_delete=models.CASCADE,
                                     blank=True,
                                     null=True)
-    legislator = models.ForeignKey("Legislator")
+    legislator = models.ForeignKey("Legislator", on_delete=models.CASCADE)
     date_start = models.DateField(db_index=True)
     date_end = models.DateField(db_index=True)
     expensed = models.DecimalField(max_digits=20, decimal_places=2)
@@ -615,7 +621,7 @@ class PerLegislator(models.Model):
 
 
 class BiggestSupplierForYear(models.Model):
-    supplier = models.ForeignKey("Supplier")
+    supplier = models.ForeignKey("Supplier", on_delete=models.CASCADE)
     year = models.IntegerField(db_index=True)
     expensed = models.DecimalField(max_digits=20, decimal_places=2)
 
