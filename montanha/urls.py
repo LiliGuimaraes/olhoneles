@@ -27,7 +27,7 @@ from montanha.views import (
     show_legislator_detail, show_supplier_detail, what_is_expenses,
     contact_us, show_index,
 )
-
+app_name = 'montanha'
 
 urlpatterns = [
     # JSON queries

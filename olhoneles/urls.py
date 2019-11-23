@@ -31,20 +31,19 @@ urlpatterns = [
     # Admin
     path(r'^admin/', admin.site.urls),
 
-    # API
-    path(r'api/v0/',
-        include('tastypie_swagger.urls', namespace='olhoneles-v0'),
-        kwargs={
-            'namespace': 'olhoneles-v0',
-            'tastypie_api_module': 'montanha.api.urls.api',
-            'version': __version__,
-        }),
-    path(r'^api/', include('montanha.api.urls')),
+    # # API
+    # path(r'api/v0/',
+    #     include('tastypie_swagger.urls', namespace='olhoneles-v0'),
+    #     kwargs={
+    #         'namespace': 'olhoneles-v0',
+    #         'tastypie_api_module': 'montanha.api.urls.api',
+    #         'version': __version__,
+    #     }),
+    # path(r'^api/', include('montanha.api.urls')),
 
     # Montanha
     path(r'^', include('montanha.urls',
-                      namespace='montanha',
-                      app_name='montanha')),
+                      namespace='montanha')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
